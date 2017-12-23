@@ -8,7 +8,7 @@ import akka.http.scaladsl.server.directives.PathDirectives.path
 import akka.http.scaladsl.server.directives.RouteDirectives.complete
 import akka.pattern.ask
 import akka.util.Timeout
-import com.mcl.tic.tac.toe.server.TicTacToeActor.GetState
+import com.mcl.tic.tac.toe.server.TicTacToeActor.GetNextState
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -24,17 +24,16 @@ trait TicTacToeRoutes extends JsonSupport {
   implicit lazy val timeout = Timeout(5.seconds)
 
   lazy val ticTacToeRoutes: Route =
-    pathPrefix("games") {
-      path(Segment) { gameSessionId =>
-        concat(
-          get {
-            val maybeGameState: Future[Option[GameState]] =
-              (ticTacToeActor ? GetState(gameSessionId)).mapTo[Option[GameState]]
-            rejectEmptyResponse {
-              complete(maybeGameState)
+    pathPrefix("tic-tac-toe") {
+      post {
+        path("next-state") {
+          entity(as[State]) { state =>
+            val nextState: Future[State] = (ticTacToeActor ? GetNextState(state)).mapTo[State]
+            onComplete(nextState) {
+              nextState => complete(nextState)
             }
           }
-        )
+        }
       }
     }
 }

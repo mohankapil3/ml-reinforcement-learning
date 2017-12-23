@@ -10,11 +10,7 @@ export class BoardComponent {
 
   size = 9;
 
-  private grid: Array<any>;
-
-  constructor() {
-    this.grid = new Array<any>(this.size);
-  }
+  private grid: Array<string> = ["", "", "", "", "", "", "", "", ""];
 
   placeMark(mark: string, position: number) {
     if (this.isValid(position)) {
@@ -26,6 +22,14 @@ export class BoardComponent {
     return this.grid[position];
   }
 
+  getCurrentState() {
+    return new State(this.grid);
+  }
+
+  updateState(state: IState) {
+    this.grid = state.grid;
+  }
+
   isValid(position: number): boolean {
     return (this.isValidRange(position) && this.isPositionEmpty(position));
   }
@@ -35,7 +39,24 @@ export class BoardComponent {
   }
 
   private isPositionEmpty(position: number): boolean {
-    return (this.grid[position] === undefined);
+    return (this.grid[position] === undefined || this.grid[position] == "");
   }
 
 }
+
+export interface IState {
+
+  grid: Array<string>;
+
+}
+
+export class State implements IState {
+
+  grid: Array<string>;
+
+  constructor(grid: Array<string>) {
+    this.grid = grid;
+  }
+
+}
+

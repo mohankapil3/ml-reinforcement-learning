@@ -2,11 +2,13 @@ package com.mcl.tic.tac.toe.server
 
 import akka.actor.{ Actor, ActorLogging, Props }
 
-final case class GameState(positions: Array[String])
+import scala.util.Random
+
+final case class State(grid: Array[String])
 
 object TicTacToeActor {
 
-  final case class GetState(gameSessionId: String)
+  final case class GetNextState(state: State)
 
   def props: Props = Props[TicTacToeActor]
 }
@@ -15,10 +17,25 @@ class TicTacToeActor extends Actor with ActorLogging {
 
   import TicTacToeActor._
 
-  var inPlayGames = Map.empty[String, GameState]
-
   def receive: Receive = {
-    case GetState(gameSessionId) =>
-      sender() ! inPlayGames.get(gameSessionId)
+    case GetNextState(state) =>
+      sender() ! evaluateNextState(state)
   }
+
+  private def evaluateNextState(state: State): State = {
+    // Dumb engine, picks up random next available move
+    val emptyPositionsIndex = state.grid.zipWithIndex.filter(entry => entry._1 == "").map(_._2)
+    if (!emptyPositionsIndex.isEmpty) {
+      val nextMoveIndex = getRandom(emptyPositionsIndex)
+      state.grid(nextMoveIndex) = "X"
+    }
+    state
+  }
+
+  private def getRandom(items: Seq[Int]): Int = {
+    val random = new Random
+    val randomIndex = random.nextInt(items.length)
+    items(randomIndex)
+  }
+
 }

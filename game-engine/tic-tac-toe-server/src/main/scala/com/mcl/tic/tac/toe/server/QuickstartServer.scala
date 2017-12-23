@@ -9,7 +9,7 @@ import akka.stream.ActorMaterializer
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.io.StdIn
 
-object QuickstartServer extends App with TicTacToeRoutes {
+object QuickstartServer extends App with TicTacToeRoutes with CorsSupport {
 
   implicit val system: ActorSystem = ActorSystem("tic-tac-toe-server")
   implicit val materializer: ActorMaterializer = ActorMaterializer()
@@ -18,7 +18,7 @@ object QuickstartServer extends App with TicTacToeRoutes {
 
   val ticTacToeActor: ActorRef = system.actorOf(TicTacToeActor.props, "ticTacToeActor")
 
-  lazy val routes: Route = ticTacToeRoutes
+  lazy val routes: Route = corsHandler(ticTacToeRoutes)
 
   val serverBindingFuture: Future[ServerBinding] = Http().bindAndHandle(routes, "localhost", 8080)
 

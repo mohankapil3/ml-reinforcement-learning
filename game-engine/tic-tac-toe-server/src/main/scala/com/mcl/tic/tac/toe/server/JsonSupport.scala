@@ -7,6 +7,6 @@ trait JsonSupport extends SprayJsonSupport {
 
   import DefaultJsonProtocol._
 
-  implicit val gameStateJsonFormat = jsonFormat1(GameState)
+  implicit val gameStateJsonFormat = jsonFormat1(State)
 
 }
