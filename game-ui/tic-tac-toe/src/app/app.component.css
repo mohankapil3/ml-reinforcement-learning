@@ -1,5 +1,34 @@
 .container {
     margin: 0 auto;
     width: 300px;
+}
 
+button {
+    background: #ffa55c;
+    background-image: -webkit-linear-gradient(top, #ffa55c, #ffac7f);
+    background-image: -moz-linear-gradient(top, #ffa55c, #ffac7f);
+    background-image: -ms-linear-gradient(top, #ffa55c, #ffac7f);
+    background-image: -o-linear-gradient(top, #ffa55c, #ffac7f);
+    background-image: linear-gradient(to bottom, #ffa55c, #ffac7f);
+    -webkit-border-radius: 8;
+    -moz-border-radius: 8;
+    border-radius: 8px;
+    outline: none;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+    border: none;
+    transition-duration: 2s;
+    margin-top: 2em;
+}
+
+button:hover {
+    background-color: #faa076;
+    background-image: -webkit-linear-gradient(top, #faa076, #fa806e);
+    background-image: -moz-linear-gradient(top, #faa076, #fa806e);
+    background-image: -ms-linear-gradient(top, #faa076, #fa806e);
+    background-image: -o-linear-gradient(top, #faa076, #fa806e);
+    background-image: linear-gradient(to bottom, #faa076, #fa806e);
+    text-decoration: none;
 }

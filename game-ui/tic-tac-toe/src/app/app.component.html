@@ -2,6 +2,10 @@
 
   <h1>{{title}}</h1>
 
+  <hr />
+
+  <h2>Status - {{gameStatus}}</h2>
+
   <div id="board">
     <div class="row" *ngFor="let row of rows">
       <app-tile *ngFor="let col of columns"
@@ -10,5 +14,7 @@
       </app-tile>
     </div>
   </div>
+
+  <button (click)="startAgain()">Start Again</button>
 
 </div>
