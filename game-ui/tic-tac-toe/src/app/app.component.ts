@@ -49,6 +49,15 @@ export class AppComponent {
   private updateGameStatus() {
     if (this.board.isWon()) {
       this.gameStatus = 'Game Finished'
+      // report machine loss to game engine
+      if (this.board.whoHasWon() === 'O') {
+        this.remoteService
+            .reportLoss(this.board.getCurrentState())
+            .subscribe(
+                states => console.log('catelogue of lost states - ' + states),
+                error => console.log('error in invocation - ' + error)
+             )
+      }
     } else if (this.board.isDraw()) {
       this.gameStatus = 'Game Draw'
     }

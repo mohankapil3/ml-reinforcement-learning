@@ -10,6 +10,8 @@ export class BoardComponent {
 
   size = 9;
 
+  private unknownPlayer = "_";
+
   private grid: Array<string> = this.getNewGrid();
 
   placeMark(mark: string, position: number) {
@@ -44,6 +46,23 @@ export class BoardComponent {
 
   isWon(): boolean {
     return (this.checkRows() || this.checkColumns() || this.checkDiagonals());
+  }
+
+  whoHasWon(): string {
+     let winningPlayer = this.getWinningPlayerByRow();
+     if (winningPlayer != this.unknownPlayer) {
+       return winningPlayer;
+     }
+     winningPlayer = this.getWinningPlayerByColumn();
+     if (winningPlayer != this.unknownPlayer) {
+       return winningPlayer;
+     }
+     winningPlayer = this.getWinningPlayerByDiagonal();
+     if (winningPlayer != this.unknownPlayer) {
+       return winningPlayer;
+     }
+
+     return winningPlayer;
   }
 
   reset() {
@@ -102,11 +121,46 @@ export class BoardComponent {
     return (this.grid[position] === undefined || this.grid[position] == "");
   }
 
+  private getWinningPlayerByRow(): string {
+    for (let i = 0; i < 7; i = i + 3) {
+      if (!this.isPositionEmpty(i) && this.returnMark(i) === this.returnMark(i + 1) && this.returnMark(i + 1) === this.returnMark(i + 2)) {
+        return this.returnMark(i);
+      }
+    }
+    return this.unknownPlayer;
+  }
+
+  private getWinningPlayerByColumn(): string {
+    for (let i = 0; i < 3; i++) {
+      if (!this.isPositionEmpty(i) && this.returnMark(i) === this.returnMark(i + 3) && this.returnMark(i + 3) === this.returnMark(i + 6)) {
+        return this.returnMark(i);
+      }
+    }
+    return this.unknownPlayer;
+  }
+
+  private getWinningPlayerByDiagonal(): string {
+    if (!this.isPositionEmpty(0) && this.returnMark(0) === this.returnMark(4) && this.returnMark(4) === this.returnMark(8)) {
+       return this.returnMark(0);
+    }
+    if (!this.isPositionEmpty(2) && this.returnMark(2) === this.returnMark(4) && this.returnMark(4) === this.returnMark(6)) {
+       return this.returnMark(2);
+    }
+
+    return this.unknownPlayer;
+  }
+
 }
 
 export interface IState {
 
   grid: Array<string>;
+
+}
+
+export interface IStates {
+
+  something: Array<string>;
 
 }
 
