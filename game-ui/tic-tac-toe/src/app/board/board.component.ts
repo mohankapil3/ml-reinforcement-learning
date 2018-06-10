@@ -25,7 +25,12 @@ export class BoardComponent {
   }
 
   getCurrentState() {
-    return new State(this.grid);
+    let gridCopy = this.getNewGrid();
+    for (let i = 0; i < 9; i++) {
+      gridCopy[i] = this.grid[i];
+    }
+
+    return new State(gridCopy);
   }
 
   updateState(state: IState) {

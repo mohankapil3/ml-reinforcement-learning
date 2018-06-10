@@ -9,20 +9,26 @@ object StateEvaluationService {
   def getNextState(state: State): State = {
     val emptyPositionsIndexes = state.getEmptyPositionIndexes
     if (emptyPositionsIndexes.nonEmpty) {
-      emptyPositionsIndexes.map(p => state.copyWithNewPosition(p, "X"))
-        .collectFirst { case s if getReward(s) > 0 => s }
-        .getOrElse(state.copyWithNewPosition(emptyPositionsIndexes.head, "X"))
+      val chosenPosition = emptyPositionsIndexes
+        .collectFirst { case p if getReward(state, p) > 0 => p }
+        .getOrElse(emptyPositionsIndexes.head)
+      state.copyWithNewPosition(chosenPosition, "X")
     } else {
       state
     }
   }
 
-  private def getReward(probableNextState: State): Int = {
-    if (losingStates.exists(s => s.startsWith(probableNextState.getStringRepresentation())))
+  private def getReward(state: State, probableNextPosition: Int): Int = {
+    if (losingStates.exists(s => startsWith(s, state, probableNextPosition)))
       // Some terminal failure state had similar pattern, so negative reward
       -1
     else
       1
+  }
+
+  private def startsWith(losingStateRepresentation: String, state: State, probableNextPosition: Int): Boolean = {
+    val probableNextStatePrefix = state.getStringRepresentation().substring(0, probableNextPosition) + "X"
+    losingStateRepresentation.startsWith(probableNextStatePrefix)
   }
 
   def registerTerminalStateResultingInLoss(state: State): List[String] = {

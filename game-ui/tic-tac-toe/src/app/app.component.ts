@@ -19,9 +19,11 @@ export class AppComponent {
   rows = Array.from(Array(this.boardDimension).keys());
   columns = Array.from(Array(this.boardDimension).keys());
   gameStatus = 'In Play'
+  lastState: IState;
 
   boardClicked(position: number): void {
     if (this.board.isPositionEmpty(position) && !this.board.isOver()) {
+      this.lastState = this.board.getCurrentState();
       this.board.placeMark('O', position)
       if (this.board.isOver()) {
         this.updateGameStatus();
@@ -52,7 +54,7 @@ export class AppComponent {
       // report machine loss to game engine
       if (this.board.whoHasWon() === 'O') {
         this.remoteService
-            .reportLoss(this.board.getCurrentState())
+            .reportLoss(this.lastState)
             .subscribe(
                 states => console.log('catelogue of lost states - ' + states),
                 error => console.log('error in invocation - ' + error)
