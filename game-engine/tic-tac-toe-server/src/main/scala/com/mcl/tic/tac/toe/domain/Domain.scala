@@ -14,9 +14,19 @@ final case class State(grid: List[String]) {
     State(copyOfGrid.toList)
   }
 
-  def getStringRepresentation(): String = grid.map(position => if (position == "") "_" else position).mkString("")
+  def getStringRepresentation(): String = grid.map(position => if (position == UserPositionLabel.EMPTY_POSITION) "_" else position).mkString("")
 
   override def toString: String = "State(" + getStringRepresentation + ")"
+
+}
+
+object UserPositionLabel {
+
+  val MACHINE_USER = "X"
+
+  val OTHER_USER = "O"
+
+  val EMPTY_POSITION = ""
 
 }
 

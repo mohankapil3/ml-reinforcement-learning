@@ -20,7 +20,7 @@ class TicTacToeActor extends Actor with ActorLogging {
     case GetNextState(state) =>
       sender() ! StateEvaluationService.getNextState(state)
     case ReportLoss(terminalState) =>
-      sender() ! StateEvaluationService.registerTerminalStateResultingInLoss(terminalState)
+      sender() ! StateEvaluationService.registerStateResultingInLoss(terminalState)
   }
 
 }
