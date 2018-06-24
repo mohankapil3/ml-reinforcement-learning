@@ -33,11 +33,11 @@ class TicTacToeActorSpec extends TestKit(ActorSystem("MySpec")) with ImplicitSen
       ticTacToe ! GetNextState(state)
       val nextState = receiveN(1).head.asInstanceOf[State]
 
-      nextState should not equal (state)
+      nextState shouldNot be(state)
       val differenceInPositions = state.grid.zip(nextState.grid).filter(entry => entry._1 != entry._2)
-      differenceInPositions.size should be(1)
-      differenceInPositions.head._1 should equal(EMPTY_POSITION)
-      differenceInPositions.head._2 should equal(MACHINE_USER)
+      differenceInPositions.size shouldBe 1
+      differenceInPositions.head._1 shouldBe EMPTY_POSITION
+      differenceInPositions.head._2 shouldBe MACHINE_USER
     }
 
   }

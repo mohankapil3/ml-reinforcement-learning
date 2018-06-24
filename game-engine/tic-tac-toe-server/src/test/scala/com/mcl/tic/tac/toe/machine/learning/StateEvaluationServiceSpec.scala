@@ -51,7 +51,7 @@ class StateEvaluationServiceSpec extends FlatSpec with Matchers {
       EMPTY_POSITION
     ))
 
-    StateEvaluationService.getNextState(currentState) should be(expectedNextState)
+    StateEvaluationService.getNextState(currentState) shouldBe expectedNextState
   }
 
 }

@@ -24,7 +24,7 @@ class DomainSpec extends FlatSpec with Matchers {
       OTHER_USER,
       EMPTY_POSITION,
       MACHINE_USER
-    )).getEmptyPositionIndexes() should be(Seq(1, 2, 4, 7))
+    )).getEmptyPositionIndexes() shouldBe Seq(1, 2, 4, 7)
   }
 
   it should "return correct copy" in {
@@ -38,7 +38,7 @@ class DomainSpec extends FlatSpec with Matchers {
       OTHER_USER,
       EMPTY_POSITION,
       MACHINE_USER
-    )).copyWithNewPosition(2, MACHINE_USER) should be(
+    )).copyWithNewPosition(2, MACHINE_USER) shouldBe
       State(List(
         OTHER_USER,
         EMPTY_POSITION,
@@ -50,7 +50,6 @@ class DomainSpec extends FlatSpec with Matchers {
         EMPTY_POSITION,
         MACHINE_USER
       ))
-    )
   }
 
   it should "return correct string representation" in {
@@ -64,7 +63,7 @@ class DomainSpec extends FlatSpec with Matchers {
       OTHER_USER,
       EMPTY_POSITION,
       MACHINE_USER
-    )).getStringRepresentation() should be("O__X_OO_X")
+    )).getStringRepresentation() shouldBe "O__X_OO_X"
   }
 
 }
