@@ -7,7 +7,7 @@ import com.mcl.tic.tac.toe.domain.UserPositionLabel.{ EMPTY_POSITION, OTHER_USER
 import com.mcl.tic.tac.toe.server.TicTacToeActor.GetNextState
 import org.scalatest.{ BeforeAndAfterAll, Matchers, WordSpecLike }
 
-class TicTacToeActorSpec extends TestKit(ActorSystem("MySpec")) with ImplicitSender
+class TicTacToeActorSpec extends TestKit(ActorSystem("TicTacToeActorSpec")) with ImplicitSender
     with WordSpecLike with Matchers with BeforeAndAfterAll {
 
   override def afterAll {
