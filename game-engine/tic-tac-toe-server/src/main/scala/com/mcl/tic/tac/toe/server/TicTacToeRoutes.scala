@@ -2,6 +2,7 @@ package com.mcl.tic.tac.toe.server
 
 import akka.actor.{ ActorRef, ActorSystem }
 import akka.event.Logging
+import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.PathDirectives.path
@@ -14,7 +15,7 @@ import com.mcl.tic.tac.toe.server.TicTacToeActor.{ GetNextState, ReportLoss }
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-trait TicTacToeRoutes extends JsonSupport {
+trait TicTacToeRoutes extends SprayJsonSupport with CustomJsonSupport {
 
   implicit def system: ActorSystem
 
@@ -41,7 +42,7 @@ trait TicTacToeRoutes extends JsonSupport {
             entity(as[State]) { state =>
               val currentRegistry: Future[List[String]] = (ticTacToeActor ? ReportLoss(state)).mapTo[List[String]]
               onComplete(currentRegistry) {
-                currentRegistry => complete(currentRegistry.toString)
+                currentRegistry => complete(currentRegistry)
               }
             }
           }
