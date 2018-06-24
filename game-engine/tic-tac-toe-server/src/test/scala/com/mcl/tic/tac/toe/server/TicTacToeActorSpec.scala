@@ -17,7 +17,7 @@ class TicTacToeActorSpec extends TestKit(ActorSystem("MySpec")) with ImplicitSen
   "A TicTacToe actor" must {
 
     "send back some new state with only one new position" in {
-      val ticTacToe = system.actorOf(Props[TicTacToeActor])
+      val ticTacToe = system.actorOf(TicTacToeActor.props)
       val state = State(List(
         OTHER_USER,
         MACHINE_USER,

@@ -21,12 +21,15 @@ final case class State(grid: List[String]) {
 }
 
 object UserPositionLabel {
-
   val MACHINE_USER = "X"
-
   val OTHER_USER = "O"
-
   val EMPTY_POSITION = ""
+}
 
+final case class Outcome(status: String)
+
+object Status {
+  val SUCCESS = "success"
+  val FAILED = "failed"
 }
 

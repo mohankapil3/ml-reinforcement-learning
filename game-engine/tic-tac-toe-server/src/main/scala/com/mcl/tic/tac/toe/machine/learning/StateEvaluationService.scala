@@ -1,6 +1,6 @@
 package com.mcl.tic.tac.toe.machine.learning
 
-import com.mcl.tic.tac.toe.domain.State
+import com.mcl.tic.tac.toe.domain.{ Outcome, State, Status }
 import com.mcl.tic.tac.toe.domain.UserPositionLabel._
 
 import scala.collection.mutable.Set
@@ -25,9 +25,9 @@ object StateEvaluationService {
     }
   }
 
-  def registerStateResultingInLoss(state: State): List[String] = {
-    losingStates += state.getStringRepresentation()
-    losingStates.toList
+  def registerStateResultingInLoss(state: State): Outcome = {
+    losingStates += state.getStringRepresentation
+    Outcome(Status.SUCCESS)
   }
 
   private def getReward(state: State, probableNextPosition: Int): Int = {

@@ -9,7 +9,7 @@ import akka.http.scaladsl.server.directives.PathDirectives.path
 import akka.http.scaladsl.server.directives.RouteDirectives.complete
 import akka.pattern.ask
 import akka.util.Timeout
-import com.mcl.tic.tac.toe.domain.State
+import com.mcl.tic.tac.toe.domain.{ Outcome, State }
 import com.mcl.tic.tac.toe.server.TicTacToeActor.{ GetNextState, ReportLoss }
 
 import scala.concurrent.Future
@@ -40,12 +40,13 @@ trait TicTacToeRoutes extends SprayJsonSupport with CustomJsonSupport {
         post {
           path("report-loss") {
             entity(as[State]) { state =>
-              val currentRegistry: Future[List[String]] = (ticTacToeActor ? ReportLoss(state)).mapTo[List[String]]
-              onComplete(currentRegistry) {
-                currentRegistry => complete(currentRegistry)
+              val outcome: Future[Outcome] = (ticTacToeActor ? ReportLoss(state)).mapTo[Outcome]
+              onComplete(outcome) {
+                outcome => complete(outcome)
               }
             }
           }
         }
     }
+
 }
