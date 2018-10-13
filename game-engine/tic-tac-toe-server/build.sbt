@@ -1,6 +1,9 @@
 lazy val akkaHttpVersion = "10.0.10"
 lazy val akkaVersion    = "2.5.4"
 
+dockerBaseImage := "openjdk:8-jre-alpine"
+packageName in Docker := "tic-tac-toe-app"
+
 lazy val root = (project in file(".")).
   settings(
     inThisBuild(List(
@@ -14,4 +17,4 @@ lazy val root = (project in file(".")).
       "com.typesafe.akka" %% "akka-testkit"         % akkaVersion     % Test,
       "org.scalatest"     %% "scalatest"            % "3.0.1"         % Test
     )
-  )
+  ).enablePlugins(JavaAppPackaging, AshScriptPlugin)
