@@ -37,16 +37,17 @@ trait TicTacToeRoutes extends SprayJsonSupport with CustomJsonSupport {
           }
         }
       } ~
-        post {
-          path("report-loss") {
-            entity(as[State]) { state =>
-              val outcome: Future[Outcome] = (ticTacToeActor ? ReportLoss(state)).mapTo[Outcome]
-              onComplete(outcome) {
-                outcome => complete(outcome)
-              }
+      post {
+        path("report-loss") {
+          entity(as[State]) { state =>
+            val outcome: Future[Outcome] = (ticTacToeActor ? ReportLoss(state)).mapTo[Outcome]
+            onComplete(outcome) {
+              outcome => complete(outcome)
             }
           }
         }
+      } ~
+      getFromResourceDirectory("web-app")
     }
 
 }

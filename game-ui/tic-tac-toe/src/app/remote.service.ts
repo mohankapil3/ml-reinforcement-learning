@@ -10,8 +10,8 @@ import { IState, State, IStates } from './board/board.component';
 @Injectable()
 export class RemoteService {
 
-  private GAME_ENGINE_URL_FOR_NEXT_STATE = 'http://localhost:8080/tic-tac-toe/next-state';
-  private GAME_ENGINE_URL_FOR_REPORTING_LOSS = 'http://localhost:8080/tic-tac-toe/report-loss';
+  private GAME_ENGINE_URL_FOR_NEXT_STATE = 'next-state';
+  private GAME_ENGINE_URL_FOR_REPORTING_LOSS = 'report-loss';
 
   constructor (private http: Http) {}
 
