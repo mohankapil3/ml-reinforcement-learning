@@ -23,7 +23,7 @@ object TicTacToeAppServer extends App with TicTacToeRoutes {
   lazy val routes: Route = ticTacToeRoutes
 
   Http()
-    .bindAndHandle(routes, "localhost", 8080)
+    .bindAndHandle(routes, "0.0.0.0", 8080)
     .onComplete {
       case Success(b) => log.info(s"Application is up and running at ${b.localAddress.getHostName}:${b.localAddress.getPort}")
       case Failure(e) => log.error(s"Could not start application: {}", e.getMessage)
